@@ -17,5 +17,8 @@ Process MD data by x3dna
 `pip install -e . --upgrade`
 
 # Location of site-packages
-/home/yizaochen/miniconda3/envs/bentdna/lib/python3.8/site-packages
+/home/yizaochen/miniconda3/envs/x3dna/lib/python3.8/site-packages
 
+# Protocol:
+### Transfer required file to server
+`transfer_to_server.ipynb`
