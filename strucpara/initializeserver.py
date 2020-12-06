@@ -1,5 +1,4 @@
 from os import path, system
-from strucpara.miscell import check_dir_exist_and_make
 
 class InitialAgent:
     gmx_server = '/home/tclick/usr/gromacs-5.1/bin/gmx'
