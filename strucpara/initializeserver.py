@@ -17,8 +17,7 @@ class InitialAgent:
         self.xtc2pdb_qsub = path.join(self.host_folder, 'xtc2pdb.qsub')
 
     def write_xtc2pdb_qsub(self):
-        qsubfile = 'x.qsub'
-        f = open(qsubfile, 'w')
+        f = open(self.xtc2pdb_qsub, 'w')
         f.write('#!/bin/bash -l\n')
         f.write(f'#PBS -N {self.host}_xtc2pdb\n')
         f.write('#PBS -l walltime=48:00:00\n')
