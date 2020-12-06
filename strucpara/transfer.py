@@ -3,7 +3,7 @@ from shutil import copyfile
 from strucpara.miscell import check_dir_exist_and_make
 
 class TransferAgent:
-    gmx_locol = '/usr/bin/gmx'
+    gmx_local = '/usr/bin/gmx'
     type_na = 'bdna+bdna'
     time_series = ['0_1us', '1_2us', '2_3us', '3_4us', '4_5us']
     collect_root = '/home/yizaochen/codes/dna_rna/collect_folder_to_multiscale'
@@ -23,22 +23,25 @@ class TransferAgent:
         self.collect_folder = path.join(self.collect_host_folder, time_interval)
         self.col_perfect_pdb = path.join(self.collect_folder, f'{self.type_na}.perfect.pdb')
         self.col_all_fitperfect_xtc = path.join(self.collect_folder, f'{self.type_na}.all.fitperfect.xtc')
-        self.compress_product = path.join(self.collect_root, 'x3dna.required.tar.bz2')
+        self.compress_product = path.join(self.collect_folder, 'x3dna.required.tar.bz2')
 
         self.check_folders()
+
+        # On server
+        self.target_folder = '/home/yizaochen/x3dna/paper_2021'
 
     def check_folders(self):
         for folder in [self.collect_host_folder, self.collect_folder]:
             check_dir_exist_and_make(folder)
 
     def perfect_gro_to_pdb(self):
-        cmd = f'{self.gmx_locol} editconf -f {self.perfect_gro} -o {self.perfect_pdb}'
+        cmd = f'{self.gmx_local} editconf -f {self.perfect_gro} -o {self.perfect_pdb}'
         system(cmd)
         print(cmd)
 
     def rmsd_fit_to_perfect(self):
-        cmd = f'{self.gmx_locol} trjconv -fit rot+trans -s {self.perfect_pdb} -f {self.allxtc} -o {self.all_fitperfect_xtc}'
-        #system(cmd)
+        cmd = f'echo 0 0 | {self.gmx_local} trjconv -fit rot+trans -s {self.perfect_pdb} -f {self.allxtc} -o {self.all_fitperfect_xtc}'
+        system(cmd)
         print(cmd)
 
     def copy_to_collect_folder(self):
@@ -53,8 +56,16 @@ class TransferAgent:
         print(cmd)
 
     def scp_to_server(self, serverip):
-        target_folder = '/home/yizaochen/x3dna/paper_2021' # on server
         print('Please excute the following in the terminal:')
-        cmd = f'scp {self.compress_product} yizaochen@{serverip}:{target_folder}'
+        cmd = f'scp {self.compress_product} yizaochen@{serverip}:{self.target_folder}'
         print(cmd)
 
+    def decompress_in_server(self):
+        target_file = 'x3dna.required.tar.bz2'
+        print('Please excute the following in the terminal:')
+        cmd = f'cd {self.target_folder}'
+        print(cmd)
+        cmd = f'tar -jxv -f {target_file} -C ./'
+        print(cmd)
+        cmd = f'rm {target_file}'
+        print(cmd)

@@ -1,10 +1,39 @@
 from os import path, system
 from strucpara.miscell import check_dir_exist_and_make
 
-
 class InitialAgent:
-    def __init__(self):
-        pass
+    gmx_server = '/home/tclick/usr/gromacs-5.1/bin/gmx'
+    rootfolder = '/home/yizaochen/x3dna/paper_2021'
+    type_na = 'bdna+bdna'
 
-    def decompress(self):
-        pass
+    def __init__(self, host, time_interval):
+        self.host = host
+        self.time_interval = time_interval
+        self.host_folder = path.join(self.rootfolder, host, time_interval)
+        self.ref_pdb = path.join(self.host_folder, f'{self.type_na}.perfect.pdb')
+        self.in_xtc = path.join(self.host_folder, f'{self.type_na}.all.fitperfect.xtc')
+        self.out_pdb = path.join(self.host_folder, f'{self.type_na}.all.fitperfect.pdb')
+
+        self.xtc2pdb_qsub = path.join(self.host_folder, 'xtc2pdb.qsub')
+
+    def write_xtc2pdb_qsub(self):
+        qsubfile = 'x.qsub'
+        f = open(qsubfile, 'w')
+        f.write('#!/bin/bash -l\n')
+        f.write(f'#PBS -N {self.host}_xtc2pdb\n')
+        f.write('#PBS -l walltime=48:00:00\n')
+        f.write('#PBS -q batch\n')
+        f.write('#PBS -l nodes=1:ppn=16\n')
+        f.write('#PBS -j oe\n')
+        f.write(f'#PBS -o /home/yizaochen/log/{self.host}_xtc2pdb.log\n')
+        f.write('#PBS -r n\n\n')
+        cmd = f'{self.gmx_server} trjconv -s {self.ref_pdb} -f {self.in_xtc} -o {self.out_pdb}'
+        f.write(f'{cmd}\n')
+        f.close()
+
+    def qsub_xtc2pdb(self):
+        cmd = f'qsub {self.xtc2pdb_qsub}'
+        system(cmd)
+        print(cmd)
+        print('Log file is:')
+        print(f'/home/yizaochen/log/{self.host}_xtc2pdb.log')

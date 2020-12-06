@@ -1,0 +1,7 @@
+README.md
+setup.py
+strucpara.egg-info/PKG-INFO
+strucpara.egg-info/SOURCES.txt
+strucpara.egg-info/dependency_links.txt
+strucpara.egg-info/requires.txt
+strucpara.egg-info/top_level.txt
