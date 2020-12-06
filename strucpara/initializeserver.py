@@ -26,7 +26,7 @@ class InitialAgent:
         f.write('#PBS -j oe\n')
         f.write(f'#PBS -o /home/yizaochen/log/{self.host}_xtc2pdb.log\n')
         f.write('#PBS -r n\n\n')
-        cmd = f'{self.gmx_server} trjconv -s {self.ref_pdb} -f {self.in_xtc} -o {self.out_pdb}'
+        cmd = f'echo 0 | {self.gmx_server} trjconv -s {self.ref_pdb} -f {self.in_xtc} -o {self.out_pdb}'
         f.write(f'{cmd}\n')
         f.close()
 
