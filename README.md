@@ -22,3 +22,5 @@ Process MD data by x3dna
 # Protocol:
 ### Transfer required file to server
 `transfer_to_server.ipynb`
+### Convert xtc to pdb on server
+`xtc2pdb.ipynb`
