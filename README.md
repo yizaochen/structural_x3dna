@@ -24,3 +24,5 @@ Process MD data by x3dna
 `transfer_to_server.ipynb`
 ### Convert xtc to pdb on server
 `xtc2pdb.ipynb`
+### x3dna_ensemble analysis on server
+`ensemble_analyze.ipynb`
