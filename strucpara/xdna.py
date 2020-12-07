@@ -1,7 +1,7 @@
 from os import path, system
 from strucpara.miscell import check_dir_exist_and_make
 class X3DNAAgent:
-    x3dna_root = '/home/yizaochen/x3dna-v2.3'
+    x3dna_root = '/home/yizaochen/x3dna-v2.3/bin'
     ensemble_exec = path.join(x3dna_root, 'x3dna_ensemble')
     python_exec = '/home/yizaochen/miniconda3/envs/x3dna/bin/python'
     rootfolder = '/home/yizaochen/x3dna/paper_2021'
