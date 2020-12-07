@@ -61,3 +61,10 @@ class X3DNAAgent:
         f.write(f'{self.emsemble_exec} analyze -b {self.findpair_inp} -e {self.out_pdb} -o {self.ensemble_scr}\n')
         f.write(f'cp {self.ensemble_scr} {self.ensemble_output}\n')
         f.close()
+
+    def qsub_ensemble_analyse(self):
+        cmd = f'qsub {self.emsemble_qsub}'
+        system(cmd)
+        print(cmd)
+        print('Log file is:')
+        print(f'/home/yizaochen/log/{self.host}_emsemble_analyze.log')
