@@ -96,6 +96,11 @@ class BasePairAgent:
         return np.ndarray.flatten(temp_array)
 
 class BaseStepAgent(BasePairAgent):
+    d_bimodal_label = {'atat_21mer': ('5\'-TA-3\'', '5\'-AT-3\''),
+                       'gcgc_21mer': ('5\'-CG-3\'', '5\'-GC-3\''),
+                       'ctct_21mer': ('5\'-TC-3\'', '5\'-CT-3\''),
+                       'tgtg_21mer': ('5\'-GT-3\'', '5\'-TG-3\'')}
+
     def __init__(self, rootfolder, time_interval):
         super().__init__(rootfolder, time_interval)
 
@@ -104,6 +109,31 @@ class BaseStepAgent(BasePairAgent):
             return f'{parameter}(Å)'
         else:
             return f'{parameter}(°)'
+
+    def histogram_bimodal(self, figsize, parameter, bins, xlines, xlim, ylim):
+        fig, axes = plt.subplots(nrows=3, ncols=2, figsize=figsize, sharey=True, sharex=True)
+        colors = ['blue', 'red']
+        xlabel = self.get_xlabel(parameter)
+        row_id = 0
+        for host in ['atat_21mer', 'gcgc_21mer', 'ctct_21mer']:
+            data1, data2 = self.get_bimodal_data(host, parameter)
+            for col_id, data in enumerate([data1, data2]):
+                ax = axes[row_id, col_id]
+                label = f'{self.abbr_hosts[host]}:{self.d_bimodal_label[host][col_id]}'
+                ax.hist(data, bins=bins, density=True, color=colors[col_id], alpha=0.4, 
+                label=label)
+                for xvalue in xlines:
+                    ax.axvline(xvalue, color='grey', alpha=0.2)
+                ax.set_xlabel(xlabel,fontsize=self.lbfz)
+                ax.set_ylabel('P', fontsize=self.lbfz)
+                ax.legend(frameon=False, fontsize=self.lgfz)
+                ax.tick_params(axis='both', labelsize=self.ticksize)
+                if xlim is not None:
+                    ax.set_xlim(xlim)
+                if ylim is not None:
+                    ax.set_ylim(ylim)
+            row_id += 1     
+        return fig, ax
 
     def get_data(self, host, parameter):
         host_time_folder = path.join(self.rootfolder, host, self.time_interval)
@@ -114,5 +144,52 @@ class BaseStepAgent(BasePairAgent):
         col_id = 0
         for bp_id in range(self.start_bp, self.end_bp):
             temp_array[:,col_id] = df[f'bp{bp_id}_bp{bp_id+1}']
+            col_id += 1
+        temp_array_2 = np.ndarray.flatten(temp_array)
+        zero_indice = np.isclose(temp_array_2, 0)
+        return temp_array_2[~zero_indice]
+
+    def get_bimodal_data(self, host, parameter):
+        host_time_folder = path.join(self.rootfolder, host, self.time_interval)
+        fname = path.join(host_time_folder, f'{parameter}.csv')
+        df = pd.read_csv(fname, index_col='Frame-ID')
+        n_frame = df.shape[0]
+
+        temp_array = np.zeros((n_frame, self.n_bp))
+        col_id = 0
+        for bp_id in range(self.start_bp, self.end_bp):
+            temp_array[:,col_id] = df[f'bp{bp_id}_bp{bp_id+1}']
+            col_id += 1
+
+        temp_array_1 = temp_array[::2]
+        temp_array_2 = temp_array[1::2]
+
+        temp_array_1_flatten = np.ndarray.flatten(temp_array_1)
+        temp_array_2_flatten = np.ndarray.flatten(temp_array_2)
+        zero_indice_1 = np.isclose(temp_array_1_flatten, 0)
+        zero_indice_2 = np.isclose(temp_array_2_flatten, 0)
+
+        return temp_array_1_flatten[~zero_indice_1], temp_array_2_flatten[~zero_indice_2]
+
+class GrooveAgent(BasePairAgent):
+
+    def __init__(self, rootfolder, time_interval):
+        super().__init__(rootfolder, time_interval)
+        self.start_bp = 4
+        self.end_bp = 17
+        self.n_bp = self.end_bp - self.start_bp + 1
+
+    def get_xlabel(self, parameter):
+        return f'{parameter}(Å)'
+
+    def get_data(self, host, parameter):
+        host_time_folder = path.join(self.rootfolder, host, self.time_interval)
+        fname = path.join(host_time_folder, f'{parameter}.csv')
+        df = pd.read_csv(fname, index_col='Frame-ID')
+        n_frame = df.shape[0]
+        temp_array = np.zeros((n_frame, self.n_bp))
+        col_id = 0
+        for bp_id in range(self.start_bp, self.end_bp+1):
+            temp_array[:,col_id] = df[f'label{bp_id}']
             col_id += 1
         return np.ndarray.flatten(temp_array)

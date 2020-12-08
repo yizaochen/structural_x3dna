@@ -86,3 +86,16 @@ class BaseStepAgent(BasePairAgent):
         return ['\t'.join(result)]
 
 
+class GrooveAgent(BasePairAgent):
+    def __init__(self, rootfolder, host, time_interval):
+        super().__init__(rootfolder, host, time_interval)
+        self.parameters = ['major_gw_pp', 'major_gw_refined', 'minor_gw_pp', 'minor_gw_refined']
+
+    def get_first_line(self):
+        result = ['Frame-ID']
+        for bp_id in range(1, self.n_bp):
+            if bp_id == (self.n_bp-1):
+                result.append(f'label{bp_id}\n')
+            else:
+                result.append(f'label{bp_id}')
+        return ['\t'.join(result)] 
