@@ -4,8 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class BasePairAgent:
-    hosts = ['a_tract_21mer', 'ctct_21mer', 'gcgc_21mer',
-             'g_tract_21mer', 'atat_21mer', 'tgtg_21mer']
+    hosts = ['a_tract_21mer', 'atat_21mer', 'ctct_21mer',
+             'g_tract_21mer', 'gcgc_21mer', 'tgtg_21mer']
     abbr_hosts = {'a_tract_21mer': 'A-tract', 'ctct_21mer': 'CTCT', 'gcgc_21mer': 'GCGC',
                   'g_tract_21mer': 'G-tract', 'atat_21mer': 'ATAT', 'tgtg_21mer': 'TGTG'}
     d_colors = {'a_tract_21mer': 'blue', 'atat_21mer': 'orange', 'ctct_21mer': 'green',
@@ -180,7 +180,8 @@ class GrooveAgent(BasePairAgent):
         self.n_bp = self.end_bp - self.start_bp + 1
 
     def get_xlabel(self, parameter):
-        return f'{parameter}(Å)'
+        d_para = {'major_gw_pp': 'Major Groove Width', 'minor_gw_pp': 'Minor Groove Width'}
+        return f'{d_para[parameter]}(Å)'
 
     def get_data(self, host, parameter):
         host_time_folder = path.join(self.rootfolder, host, self.time_interval)
@@ -193,3 +194,49 @@ class GrooveAgent(BasePairAgent):
             temp_array[:,col_id] = df[f'label{bp_id}']
             col_id += 1
         return np.ndarray.flatten(temp_array)
+
+    def histogram_six(self, figsize, parameter, bins=100):
+        n_rows = 2
+        n_cols = 3
+        fig, axes = plt.subplots(nrows=n_rows, ncols=n_cols, figsize=figsize, sharex=True, sharey=True)
+        d_axes = self.get_d_axes_by_host(axes, n_rows, n_cols)
+        for host in self.hosts:
+            ax = d_axes[host]
+            data = self.get_data(host, parameter)
+            mean = np.mean(data)
+            std = np.std(data)
+            ax.hist(data, color=self.d_colors[host], density=True, bins=bins, label=self.abbr_hosts[host])
+            ax.axvline(mean, color='black', alpha=0.5)
+            self.plot_assist_x(ax, parameter)
+            self.plot_assist_y(ax, parameter)
+            ax.set_title(self.get_title(host, mean, std), fontsize=10)
+            if host in ['g_tract_21mer', 'gcgc_21mer', 'tgtg_21mer']:
+                ax.set_xlabel(self.get_xlabel(parameter))
+            if host in ['a_tract_21mer', 'g_tract_21mer']:
+                ax.set_ylabel('Probability')
+        return fig, d_axes
+
+    def get_title(self, host, mean, std):
+        return f'{self.abbr_hosts[host]}\n' + r'$\mu=' + f'{mean:.1f}$Å' + r'$~~\sigma=' + f'{std:.1f}$Å'
+
+    def plot_assist_x(self, ax, parameter):
+        d_xvalues = {'major_gw_pp': range(12, 28, 2), 'minor_gw_pp': range(8, 18, 2)}
+        xvalues = d_xvalues[parameter]
+        for xvalue in xvalues:
+            ax.axvline(xvalue, color='grey', alpha=0.1)
+
+    def plot_assist_y(self, ax, parameter):
+        d_yvalues = {'major_gw_pp': np.arange(0.05, 0.26, 0.05), 'minor_gw_pp': np.arange(0.1, 0.6, 0.1)}
+        yvalues = d_yvalues[parameter]
+        for yvalue in yvalues:
+            ax.axhline(yvalue, color='grey', alpha=0.1)
+
+    def get_d_axes_by_host(self, axes, n_rows, n_cols):
+        d_axes = dict()
+        host_id = 0
+        for row_id in range(n_rows):
+            for col_id in range(n_cols):
+                host = self.hosts[host_id]
+                d_axes[host] = axes[row_id, col_id]
+                host_id += 1
+        return d_axes
