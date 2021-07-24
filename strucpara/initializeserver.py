@@ -1,7 +1,7 @@
 from os import path, system
 
 class InitialAgent:
-    gmx_server = '/home/tclick/usr/gromacs-5.1/bin/gmx'
+    gmx_server = '/home/tclick/usr/gromacs/bin/gmx'
     rootfolder = '/home/yizaochen/x3dna/paper_2021'
     type_na = 'bdna+bdna'
 
