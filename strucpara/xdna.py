@@ -1,5 +1,37 @@
 from os import path, system
-from miscell import check_dir_exist_and_make
+from subprocess import Popen, PIPE
+from strucpara.miscell import check_dir_exist_and_make
+
+
+class X3DNALocalAgent:
+    x3dna_root = '/home/yizaochen/opt/x3dna-v2.3/bin'
+    ensemble_exec = path.join(x3dna_root, 'x3dna_ensemble')
+    rootfolder = '/home/yizaochen/codes/dna_rna/collect_folder_to_multiscale'
+    type_na = 'bdna+bdna'
+
+    def __init__(self, host, time_interval):
+        self.host = host
+        self.time_interval = time_interval
+        self.host_folder = path.join(self.rootfolder, host, time_interval)
+        self.ref_pdb = path.join(self.host_folder, f'{self.type_na}.perfect.pdb')
+        self.out_pdb = path.join(self.host_folder, f'{self.type_na}.all.fitperfect.pdb')
+
+        self.findpair_inp = path.join(self.host_folder, f'{self.type_na}.inp')
+        self.ensemble_output = path.join(self.host_folder, f'{self.type_na}.ensemble.out')
+
+    def find_pair(self):
+        find_pair = path.join(self.x3dna_root, 'find_pair')
+        print(f'Start Find-Pair: {self.host_folder}')
+        proc = Popen([find_pair, self.ref_pdb, self.findpair_inp], cwd=self.host_folder, stdout=PIPE)
+        stddata = proc.communicate()
+        return stddata
+
+    def x3dna_ensemble_analyze(self):
+        proc = Popen([self.ensemble_exec, 'analyze', '-b', self.findpair_inp, '-e', self.out_pdb, '-o', self.ensemble_output], cwd=self.host_folder, stdout=PIPE)
+        print(f'Start Ensemble Analyze: {self.host_folder}')
+        stddata = proc.communicate()
+        return stddata
+
 class X3DNAAgent:
     x3dna_root = '/home/yizaochen/x3dna-v2.3/bin'
     ensemble_exec = path.join(x3dna_root, 'x3dna_ensemble')
