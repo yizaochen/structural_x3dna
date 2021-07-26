@@ -1,4 +1,5 @@
 from os import path, system
+from shutil import move
 from subprocess import Popen, PIPE
 from strucpara.miscell import check_dir_exist_and_make
 
@@ -31,6 +32,17 @@ class X3DNALocalAgent:
         print(f'Start Ensemble Analyze: {self.host_folder}')
         stddata = proc.communicate()
         return stddata
+
+    def move_output_into_x3dna_folder(self):
+        x3dna_rootfolder = '/home/ytcdata/x3dna_data'
+        target_folder = path.join(x3dna_rootfolder, self.host, self.time_interval)
+        check_dir_exist_and_make(target_folder)
+
+        old_file = self.ensemble_output
+        new_file = path.join(target_folder, f'{self.type_na}.ensemble.out')
+        print(f'mv {old_file} {new_file}')
+        move(old_file, new_file)
+
 
 class X3DNAAgent:
     x3dna_root = '/home/yizaochen/x3dna-v2.3/bin'

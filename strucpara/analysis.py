@@ -4,20 +4,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class BasePairAgent:
-    hosts = ['a_tract_21mer', 'atat_21mer', 'ctct_21mer',
-             'g_tract_21mer', 'gcgc_21mer', 'tgtg_21mer']
-    abbr_hosts = {'a_tract_21mer': 'A-tract', 'ctct_21mer': 'CTCT', 'gcgc_21mer': 'GCGC',
-                  'g_tract_21mer': 'G-tract', 'atat_21mer': 'ATAT', 'tgtg_21mer': 'TGTG'}
+    hosts = ['a_tract_21mer', 'tat_21mer', 'g_tract_21mer', 'gcgc_21mer']
+    abbr_hosts = {'a_tract_21mer': 'A-tract', 'ctct_21mer': 'CTCT', 'gcgc_21mer': 'CpG',
+                  'g_tract_21mer': 'G-tract', 'atat_21mer': 'ATAT', 'tgtg_21mer': 'TGTG', 'tat_21mer': 'A-junction'}
     d_colors = {'a_tract_21mer': 'blue', 'atat_21mer': 'orange', 'ctct_21mer': 'green',
-                'g_tract_21mer': 'red', 'gcgc_21mer': 'magenta', 'tgtg_21mer': 'cyan'}
+                'g_tract_21mer': 'red', 'gcgc_21mer': 'magenta', 'tgtg_21mer': 'cyan', 'tat_21mer': 'green'}
     hosts_group = [['a_tract_21mer', 'g_tract_21mer'],
                    ['atat_21mer', 'gcgc_21mer'],
                    ['ctct_21mer', 'tgtg_21mer']]
+    time_intervals = ['0_1us', '1_2us', '2_3us', '3_4us', '4_5us']
 
-    def __init__(self, rootfolder, time_interval):
+    def __init__(self, rootfolder):
         self.rootfolder = rootfolder
         self.type_na = 'bdna+bdna'
-        self.time_interval = time_interval
         
         self.start_bp = 4
         self.end_bp = 18
@@ -28,6 +27,76 @@ class BasePairAgent:
         self.ticksize = 10
 
         self.parameters = ['shear', 'buckle', 'stretch', 'propeller', 'stagger', 'opening']
+
+    def histogram_four_sys_one_para(self, figsize, parameter, bins, xlines, ylines, xlim, ylim, xticks, yticks):
+        nrows = 2
+        ncols = 2
+        fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=figsize, sharey=True, sharex=True)
+        d_axes = self.get_daxes(axes, nrows, ncols)
+        for host in self.hosts:
+            data = self.get_data(host, parameter)
+            ax = d_axes[host]
+            ax.hist(data, bins=bins, density=True, color=self.d_colors[host], alpha=0.4)
+            ax.set_ylabel('P')
+
+            mean = np.mean(data)
+            std = np.std(data)
+            title = f'{self.abbr_hosts[host]}  mean: {mean:.2f}  std: {std:.2f}'
+            ax.set_title(title)
+
+
+            if host in ['g_tract_21mer', 'gcgc_21mer']:
+                ax.set_xlabel(parameter)
+            if ylines is not None:
+                for yvalue in ylines:
+                    ax.axhline(yvalue, color='grey', alpha=0.2)
+            if xlines is not None:
+                for xvalue in xlines:
+                    ax.axvline(xvalue, color='grey', alpha=0.2)
+            if xlim is not None:
+                ax.set_xlim(xlim)
+            if ylim is not None:
+                ax.set_ylim(ylim)
+            if xticks is not None:
+                ax.set_xticks(xticks)
+            if yticks is not None:
+                ax.set_yticks(yticks)
+        return fig, axes
+
+    def get_xlabel(self, parameter):
+        if parameter in ['shear', 'stretch', 'stagger']:
+            return f'{parameter}(Å)'
+        else:
+            return f'{parameter}(°)'
+
+    def get_daxes(self, axes, nrows, ncols):
+        d_axes = dict()
+        host_id = 0
+        for row_id in range(nrows):
+            for col_id in range(ncols):
+                host = self.hosts[host_id]
+                d_axes[host] = axes[row_id, col_id]
+                host_id += 1
+        return d_axes
+
+    def process_data_for_one_time_interval(self, parameter, host, time_interval):
+        host_time_folder = path.join(self.rootfolder, host, time_interval)
+        fname = path.join(host_time_folder, f'{parameter}.csv')
+        df = pd.read_csv(fname, index_col='Frame-ID')
+        n_frame = df.shape[0]
+        temp_array = np.zeros((n_frame, self.n_bp))
+        col_id = 0
+        for bp_id in range(self.start_bp, self.end_bp+1):
+            temp_array[:,col_id] = df[f'bp{bp_id}']
+            col_id += 1
+        return np.ndarray.flatten(temp_array)
+
+    def get_data(self, host, parameter):
+        d_results = dict()
+        for time_interval in self.time_intervals:
+            d_results[time_interval] = self.process_data_for_one_time_interval(parameter, host, time_interval)
+        gather_list = [d_results[time_interval] for time_interval in self.time_intervals]
+        return np.concatenate(gather_list)
 
     def histogram_three_groups(self, figsize, parameter, bins, xlines, xlim, ylim):
         nrows = 1
@@ -53,56 +122,14 @@ class BasePairAgent:
             col_id += 1
         return fig, axes
 
-    def histogram_six_sys_one_para(self, figsize, parameter, bins):
-        nrows = 2
-        ncols = 3
-        fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=figsize, sharey=True, sharex=True)
-        d_axes = self.get_daxes(axes, nrows, ncols)
-        for host in self.hosts:
-            data = self.get_data(host, parameter)
-            ax = d_axes[host]
-            ax.hist(data, bins=bins, density=True, color=self.d_colors[host], alpha=0.4)
-            ax.set_title(self.abbr_hosts[host])
-            ax.set_xlabel(parameter)
-            ax.set_ylabel('P')
-        return fig, axes
-
-    def get_xlabel(self, parameter):
-        if parameter in ['shear', 'stretch', 'stagger']:
-            return f'{parameter}(Å)'
-        else:
-            return f'{parameter}(°)'
-
-    def get_daxes(self, axes, nrows, ncols):
-        d_axes = dict()
-        host_id = 0
-        for row_id in range(nrows):
-            for col_id in range(ncols):
-                host = self.hosts[host_id]
-                d_axes[host] = axes[row_id, col_id]
-                host_id += 1
-        return d_axes
-
-    def get_data(self, host, parameter):
-        host_time_folder = path.join(self.rootfolder, host, self.time_interval)
-        fname = path.join(host_time_folder, f'{parameter}.csv')
-        df = pd.read_csv(fname, index_col='Frame-ID')
-        n_frame = df.shape[0]
-        temp_array = np.zeros((n_frame, self.n_bp))
-        col_id = 0
-        for bp_id in range(self.start_bp, self.end_bp+1):
-            temp_array[:,col_id] = df[f'bp{bp_id}']
-            col_id += 1
-        return np.ndarray.flatten(temp_array)
-
 class BaseStepAgent(BasePairAgent):
     d_bimodal_label = {'atat_21mer': ('5\'-TA-3\'', '5\'-AT-3\''),
                        'gcgc_21mer': ('5\'-CG-3\'', '5\'-GC-3\''),
                        'ctct_21mer': ('5\'-TC-3\'', '5\'-CT-3\''),
                        'tgtg_21mer': ('5\'-GT-3\'', '5\'-TG-3\'')}
 
-    def __init__(self, rootfolder, time_interval):
-        super().__init__(rootfolder, time_interval)
+    def __init__(self, rootfolder):
+        super().__init__(rootfolder)
 
     def get_xlabel(self, parameter):
         if parameter in ['shift', 'slide', 'rise']:
@@ -135,8 +162,8 @@ class BaseStepAgent(BasePairAgent):
             row_id += 1     
         return fig, ax
 
-    def get_data(self, host, parameter):
-        host_time_folder = path.join(self.rootfolder, host, self.time_interval)
+    def process_data_for_one_time_interval(self, parameter, host, time_interval):
+        host_time_folder = path.join(self.rootfolder, host, time_interval)
         fname = path.join(host_time_folder, f'{parameter}.csv')
         df = pd.read_csv(fname, index_col='Frame-ID')
         n_frame = df.shape[0]
@@ -173,8 +200,8 @@ class BaseStepAgent(BasePairAgent):
 
 class GrooveAgent(BasePairAgent):
 
-    def __init__(self, rootfolder, time_interval):
-        super().__init__(rootfolder, time_interval)
+    def __init__(self, rootfolder):
+        super().__init__(rootfolder)
         self.start_bp = 4
         self.end_bp = 17
         self.n_bp = self.end_bp - self.start_bp + 1
@@ -183,8 +210,8 @@ class GrooveAgent(BasePairAgent):
         d_para = {'major_gw_pp': 'Major Groove Width', 'minor_gw_pp': 'Minor Groove Width'}
         return f'{d_para[parameter]}(Å)'
 
-    def get_data(self, host, parameter):
-        host_time_folder = path.join(self.rootfolder, host, self.time_interval)
+    def process_data_for_one_time_interval(self, parameter, host, time_interval):
+        host_time_folder = path.join(self.rootfolder, host, time_interval)
         fname = path.join(host_time_folder, f'{parameter}.csv')
         df = pd.read_csv(fname, index_col='Frame-ID')
         n_frame = df.shape[0]
@@ -195,9 +222,44 @@ class GrooveAgent(BasePairAgent):
             col_id += 1
         return np.ndarray.flatten(temp_array)
 
-    def histogram_six(self, figsize, parameter, bins=100):
+    def histogram_four_sys_one_para(self, figsize, parameter, bins, xlines, ylines, xlim, ylim, xticks, yticks):
+        nrows = 2
+        ncols = 2
+        fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=figsize, sharey=True, sharex=True)
+        d_axes = self.get_daxes(axes, nrows, ncols)
+        for host in self.hosts:
+            data = self.get_data(host, parameter)
+            ax = d_axes[host]
+            ax.hist(data, bins=bins, density=True, color=self.d_colors[host], alpha=0.4)
+            ax.set_ylabel('P')
+
+            mean = np.mean(data)
+            std = np.std(data)
+            title = f'{self.abbr_hosts[host]}  mean: {mean:.2f}  std: {std:.2f}'
+            ax.set_title(title)
+
+            if host in ['g_tract_21mer', 'gcgc_21mer']:
+                ax.set_xlabel(self.get_xlabel(parameter))
+            if ylines is not None:
+                for yvalue in ylines:
+                    ax.axhline(yvalue, color='grey', alpha=0.2)
+            if xlines is not None:
+                for xvalue in xlines:
+                    ax.axvline(xvalue, color='grey', alpha=0.2)
+            if xlim is not None:
+                ax.set_xlim(xlim)
+            if ylim is not None:
+                ax.set_ylim(ylim)
+            if xticks is not None:
+                ax.set_xticks(xticks)
+            if yticks is not None:
+                ax.set_yticks(yticks)
+        return fig, axes
+
+
+    def histogram_four(self, figsize, parameter, bins=100):
         n_rows = 2
-        n_cols = 3
+        n_cols = 2
         fig, axes = plt.subplots(nrows=n_rows, ncols=n_cols, figsize=figsize, sharex=True, sharey=True)
         d_axes = self.get_d_axes_by_host(axes, n_rows, n_cols)
         for host in self.hosts:

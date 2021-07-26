@@ -1,7 +1,7 @@
 from os import path, system
 from io import StringIO
 import pandas as pd
-from miscell import check_dir_exist_and_make
+from strucpara.miscell import check_dir_exist_and_make
 
 ensemble_exec = '/home/yizaochen/opt/x3dna-v2.3/bin/x3dna_ensemble'
 
