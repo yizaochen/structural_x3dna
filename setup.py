@@ -10,7 +10,6 @@ setup(name='strucpara',
       install_requires=[
           'jupyterlab',
           'pandas',
-          'numpy',
-          'MDAnalysis'
+          'numpy'
       ]
       )

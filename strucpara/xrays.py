@@ -2,6 +2,7 @@ from os import path, system
 from shutil import copyfile
 from subprocess import Popen, PIPE
 from strucpara.miscell import check_dir_exist_and_make
+import numpy as np
 
 class XrayAgent:
 
@@ -75,6 +76,39 @@ class XrayAgent:
         cmd = f'grep -A {n_after} \'^                  Minor Groove        Major Groove\' {old_file} > {new_file}'
         system(cmd)
         print(cmd)
+
+    def read_local_base_pair_dat(self):
+        n_bp = self.d_n_bp[self.host]
+        f_in = self.lbp_dat
+        parameters = ['shear', 'stretch', 'stagger', 'buckle', 'propeller', 'opening']
+        d_result = {key: dict() for key in parameters}
+        lines = np.genfromtxt(f_in, skip_header=2, skip_footer=0, dtype=object)
+        for bp_id in range(n_bp):
+            for idx, parameter in enumerate(parameters):
+                d_result[parameter][bp_id+1] = float(lines[bp_id, idx+2])
+        return d_result
+
+    def read_local_base_pair_step_dat(self):
+        n_bp = self.d_n_bp[self.host] - 1
+        f_in = self.lbps_dat
+        parameters = ['shift', 'slide', 'rise', 'tilt', 'roll', 'twist']
+        d_result = {key: dict() for key in parameters}
+        lines = np.genfromtxt(f_in, skip_header=2, skip_footer=0, dtype=object)
+        for bp_id in range(n_bp):
+            for idx, parameter in enumerate(parameters):
+                d_result[parameter][bp_id+1] = float(lines[bp_id, idx+2])
+        return d_result
+
+    def read_major_minor_dat(self):
+        n_bp = self.d_n_bp[self.host] - 1
+        f_in = self.lbps_dat
+        parameters = ['Minor-P-P', 'Minor-Refined', 'Major-P-P',  'Major-Refined']
+        d_result = {key: dict() for key in parameters}
+        lines = np.genfromtxt(f_in, skip_header=2, skip_footer=0, dtype=object)
+        for bp_id in range(n_bp):
+            for idx, parameter in enumerate(parameters):
+                d_result[parameter][bp_id+1] = lines[bp_id, idx+2]
+        return d_result
 
     def vim_inp_and_outfile(self):
         print(f'vim {self.inp_file}')
