@@ -1,0 +1,431 @@
+****************************************************************************
+    3DNA v2.3-2016apr02, created and maintained by Xiang-Jun Lu (PhD)
+****************************************************************************
+1. The list of the parameters given below correspond to the 5' to 3' direction
+   of strand I and 3' to 5' direction of strand II.
+
+2. All angular parameters, except for the phase angle of sugar pseudo-
+   rotation, are measured in degrees in the range of [-180, +180], and all
+   displacements are measured in Angstrom units.
+****************************************************************************
+File name: /home/yizaochen/codes/structural_x3dna/xrays/1dc0/1dc0_clean.pdb
+Date and time: Wed Jul 28 18:15:20 2021
+
+Number of base-pairs: 12
+Number of atoms: 486
+****************************************************************************
+****************************************************************************
+RMSD of the bases (----- for WC bp, + for isolated bp, x for helix change)
+
+            Strand I                    Strand II          Helix
+   1   (0.008) ....>A:...1_:[.DC]C-----G[.DG]:..24_:B<.... (0.015)     |
+   2   (0.012) ....>A:...2_:[.DA]A-----T[.DT]:..23_:B<.... (0.015)     |
+   3   (0.015) ....>A:...3_:[.DT]T-----A[.DA]:..22_:B<.... (0.019)     |
+   4   (0.012) ....>A:...4_:[.DG]G-----C[.DC]:..21_:B<.... (0.009)     |
+   5   (0.016) ....>A:...5_:[.DG]G-----C[.DC]:..20_:B<.... (0.013)     |
+   6   (0.009) ....>A:...6_:[.DG]G-----C[.DC]:..19_:B<.... (0.019)     |
+   7   (0.009) ....>A:...7_:[.DC]C-----G[.DG]:..18_:B<.... (0.009)     |
+   8   (0.011) ....>A:...8_:[.DC]C-----G[.DG]:..17_:B<.... (0.007)     |
+   9   (0.010) ....>A:...9_:[.DC]C-----G[.DG]:..16_:B<.... (0.014)     |
+  10   (0.014) ....>A:..10_:[.DA]A-----T[.DT]:..15_:B<.... (0.007)     |
+  11   (0.012) ....>A:..11_:[.DT]T-----A[.DA]:..14_:B<.... (0.009)     |
+  12   (0.013) ....>A:..12_:[.DG]G-----C[.DC]:..13_:B<.... (0.012)     |
+****************************************************************************
+Detailed H-bond information: atom-name pair and length [ O N]
+   1 C-----G  [3]  O2 - N2  2.75  N3 - N1  2.87  N4 - O6  2.80
+   2 A-----T  [2]  N6 - O4  3.00  N1 - N3  2.72
+   3 T-----A  [2]  N3 - N1  2.81  O4 - N6  2.96
+   4 G-----C  [3]  O6 - N4  2.91  N1 - N3  2.88  N2 - O2  2.75
+   5 G-----C  [3]  O6 - N4  2.87  N1 - N3  2.88  N2 - O2  2.91
+   6 G-----C  [3]  O6 - N4  2.90  N1 - N3  2.90  N2 - O2  2.81
+   7 C-----G  [3]  O2 - N2  2.91  N3 - N1  2.95  N4 - O6  2.81
+   8 C-----G  [3]  O2 - N2  2.79  N3 - N1  2.84  N4 - O6  2.90
+   9 C-----G  [3]  O2 - N2  2.75  N3 - N1  2.84  N4 - O6  2.89
+  10 A-----T  [2]  N6 - O4  3.01  N1 - N3  2.72
+  11 T-----A  [2]  N3 - N1  2.81  O4 - N6  3.01
+  12 G-----C  [3]  O6 - N4  2.97  N1 - N3  2.92  N2 - O2  2.88
+****************************************************************************
+Overlap area in Angstrom^2 between polygons defined by atoms on successive
+bases. Polygons projected in the mean plane of the designed base-pair step.
+
+Values in parentheses measure the overlap of base ring atoms only. Those
+outside parentheses include exocyclic atoms on the ring. Intra- and
+inter-strand overlap is designated according to the following diagram:
+
+                    i2  3'      5' j2
+                       /|\      |
+                        |       |
+               Strand I |       | II
+                        |       |
+                        |       |
+                        |      \|/
+                    i1  5'      3' j1
+
+     step      i1-i2        i1-j2        j1-i2        j1-j2        sum
+   1 CA/TG  0.39( 0.01)  0.00( 0.00)  1.68( 0.87)  0.02( 0.00)  2.10( 0.89)
+   2 AT/AT  6.18( 2.51)  0.00( 0.00)  0.00( 0.00)  5.68( 2.00) 11.86( 4.51)
+   3 TG/CA  0.00( 0.00)  0.00( 0.00)  2.36( 1.32)  0.18( 0.00)  2.53( 1.32)
+   4 GG/CC  2.73( 1.22)  0.00( 0.00)  0.15( 0.00)  0.76( 0.08)  3.64( 1.30)
+   5 GG/CC  3.78( 2.42)  0.00( 0.00)  0.24( 0.00)  0.00( 0.00)  4.01( 2.42)
+   6 GC/GC  4.65( 2.22)  0.00( 0.00)  0.00( 0.00)  6.44( 4.04) 11.09( 6.25)
+   7 CC/GG  1.12( 0.13)  0.00( 0.00)  0.02( 0.00)  3.08( 1.34)  4.22( 1.47)
+   8 CC/GG  0.44( 0.01)  0.00( 0.00)  0.21( 0.00)  3.26( 1.81)  3.90( 1.82)
+   9 CA/TG  0.05( 0.00)  0.00( 0.00)  2.54( 1.49)  0.06( 0.00)  2.66( 1.49)
+  10 AT/AT  5.56( 1.89)  0.00( 0.00)  0.00( 0.00)  6.31( 2.85) 11.87( 4.74)
+  11 TG/CA  0.05( 0.00)  0.00( 0.00)  0.92( 0.35)  1.42( 0.61)  2.39( 0.96)
+****************************************************************************
+Origin (Ox, Oy, Oz) and mean normal vector (Nx, Ny, Nz) of each base-pair in
+   the coordinate system of the given structure
+
+      bp        Ox        Oy        Oz        Nx        Ny        Nz
+    1 C-G      8.841    -4.672     6.845     0.534     0.521     0.666
+    2 A-T      9.827    -1.654     8.367     0.438     0.565     0.699
+    3 T-A     10.404     1.899    10.011     0.443     0.564     0.697
+    4 G-C     10.673     5.079    11.834     0.425     0.517     0.743
+    5 G-C     10.785     7.560    14.733     0.414     0.485     0.770
+    6 G-C     10.995     8.199    18.352     0.428     0.416     0.802
+    7 C-G     11.588     9.149    21.299     0.494     0.365     0.789
+    8 C-G     13.508     9.075    24.164     0.534     0.352     0.768
+    9 C-G     16.194     9.031    26.850     0.548     0.389     0.741
+   10 A-T     19.395     9.757    28.616     0.561     0.463     0.687
+   11 T-A     22.947    10.633    29.994     0.555     0.434     0.710
+   12 G-C     26.056    11.592    31.164     0.426     0.570     0.703
+****************************************************************************
+Local base-pair parameters
+     bp        Shear    Stretch   Stagger    Buckle  Propeller  Opening
+    1 C-G       0.14     -0.18      0.04     -2.79     -5.71     -0.83
+    2 A-T      -0.04     -0.18      0.10      0.14     -6.66      6.14
+    3 T-A      -0.12     -0.12      0.13     -1.11     -8.78      3.77
+    4 G-C      -0.19     -0.13      0.13      0.46     -8.48      0.70
+    5 G-C      -0.19     -0.17     -0.01     -6.62    -11.68     -3.10
+    6 G-C      -0.28     -0.12      0.09     -7.52     -7.99      0.38
+    7 C-G       0.14     -0.11      0.10      6.92     -7.53     -2.67
+    8 C-G       0.05     -0.14     -0.02      9.41    -12.58     -0.31
+    9 C-G       0.23     -0.15      0.01      4.31     -9.12      1.12
+   10 A-T       0.07     -0.18      0.04     -0.82     -7.75      4.99
+   11 T-A      -0.01     -0.13      0.04      2.10     -1.92      2.36
+   12 G-C      -0.26     -0.07      0.32     23.52      7.00     -0.88
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      ave.     -0.04     -0.14      0.08      2.33     -6.77      0.97
+      s.d.      0.17      0.04      0.09      8.30      5.11      2.88
+****************************************************************************
+Local base-pair step parameters
+    step       Shift     Slide      Rise      Tilt      Roll     Twist
+   1 CA/TG      0.72     -1.37      3.16      0.34      6.34     32.11
+   2 AT/AT      0.05     -2.01      3.41     -0.13     -0.26     33.43
+   3 TG/CA     -0.60     -1.80      3.15     -0.95      3.74     27.20
+   4 GG/CC     -0.40     -1.50      3.48      0.60      2.41     33.57
+   5 GG/CC      0.47     -1.71      3.22      1.35      4.25     32.60
+   6 GC/GC     -0.53     -0.84      2.99     -0.27      4.83     30.23
+   7 CC/GG      0.33     -1.27      3.19      0.17      2.69     32.74
+   8 CC/GG      0.13     -1.55      3.47     -1.62      2.16     33.50
+   9 CA/TG      0.34     -1.60      3.35     -1.11      5.21     30.21
+  10 AT/AT     -0.38     -2.00      3.34     -0.80     -1.97     32.41
+  11 TG/CA     -1.16     -1.59      2.84     -2.44     10.49     22.24
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       ave.     -0.09     -1.57      3.24     -0.44      3.63     30.93
+       s.d.      0.56      0.34      0.20      1.08      3.31      3.46
+****************************************************************************
+Local base-pair helical parameters
+    step       X-disp    Y-disp   h-Rise     Incl.       Tip   h-Twist
+   1 CA/TG     -3.45     -1.23      2.85     11.32     -0.61     32.71
+   2 AT/AT     -3.45     -0.12      3.42     -0.45      0.23     33.43
+   3 TG/CA     -4.64      1.05      2.90      7.90      2.01     27.47
+   4 GG/CC     -3.01      0.80      3.36      4.16     -1.03     33.66
+   5 GG/CC     -3.72     -0.61      3.00      7.53     -2.39     32.89
+   6 GC/GC     -2.45      0.96      2.83      9.19      0.51     30.60
+   7 CC/GG     -2.68     -0.55      3.08      4.76     -0.30     32.85
+   8 CC/GG     -3.05     -0.49      3.35      3.74      2.81     33.60
+   9 CA/TG     -4.04     -0.86      3.02      9.89      2.10     30.66
+  10 AT/AT     -3.22      0.53      3.46     -3.52      1.42     32.48
+  11 TG/CA     -6.22      2.13      2.01     25.39      5.91     24.68
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       ave.     -3.63      0.15      3.03      7.26      0.97     31.37
+       s.d.      1.06      1.02      0.41      7.48      2.25      2.88
+****************************************************************************
+The 'simple' base-pair and step parameters were introduced into 3DNA as of
+v2.3-2016jan01. This list of 'simple' parameters is reported by default,
+but can be turned off by specifying 'analyze -simple=false'.
+
+The simple parameters are 'intuitive' for non-Watson-Crick base pairs and
+associated base-pair steps, where the above corresponding 3DNA parameters
+may appear cryptic. Note that the following sets of simple parameters are
+for structural description only, not to be fed into the 'rebuild' program.
+Overall, they complement the rigorous characterization of base-pair
+geometry, as exemplified by the original 3DNA analyze/rebuild programs.
+
+In short, the 'simple' base-pair parameters employ the RC8--YC6 (default,
+or RN9--YN1) vector as the (long) y-axis of the pair. As before, the
+z-axis is the average of two base normals, taking consideration of the M-N
+vs M+N base-pair classification. In essence, the 'simple' parameters make
+geometrical sense through the introduction of an ad hoc base-pair
+reference frame in each case. See x3dna.org for more details. The same
+idea applies to the 'simple' inter-base-pair step parameters, which use
+consecutive C1'--C1' vectors.
+
+Here, 'angle' refers to the inter-base angle of each pair, with values in
+the range of [0, 90] degrees corresponding to the net non-planarity, i.e.,
+sqrt(buckle^2 + propeller^2).
+
+This structure contains 0 non-Watson-Crick (with leading *) base pair(s)
+----------------------------------------------------------------------------
+Simple base-pair parameters based on RC8--YC6 vectors
+      bp        Shear    Stretch   Stagger    Buckle  Propeller  Opening  angle
+     1 C-G       0.14     -0.18      0.04     -2.74     -5.74     -0.83    6.4
+     2 A-T      -0.04     -0.18      0.10      0.15     -6.66      6.13    6.7
+     3 T-A      -0.13     -0.11      0.13     -1.26     -8.76      3.76    8.8
+     4 G-C      -0.19     -0.13      0.13      0.33     -8.48      0.70    8.5
+     5 G-C      -0.19     -0.17     -0.01     -6.75    -11.61     -3.09   13.4
+     6 G-C      -0.28     -0.11      0.09     -7.68     -7.83      0.38   11.0
+     7 C-G       0.14     -0.11      0.10      6.97     -7.48     -2.66   10.2
+     8 C-G       0.05     -0.14     -0.02      9.35    -12.62     -0.31   15.7
+     9 C-G       0.23     -0.15      0.01      4.46     -9.05      1.12   10.1
+    10 A-T       0.07     -0.18      0.04     -0.73     -7.76      4.97    7.8
+    11 T-A      -0.01     -0.13      0.04      2.09     -1.93      2.36    2.8
+    12 G-C      -0.26     -0.06      0.32     23.61      6.70     -0.89   24.5
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       ave.     -0.04     -0.14      0.08      2.32     -6.77      0.97
+       s.d.      0.17      0.04      0.09      8.35      5.03      2.87
+----------------------------------------------------------------------------
+Simple base-pair step parameters based on consecutive C1'-C1' vectors
+      step       Shift     Slide      Rise      Tilt      Roll     Twist
+     1 CA/TG      0.73     -1.37      3.16      0.31      6.34     33.06
+     2 AT/AT      0.04     -2.01      3.41     -0.14     -0.26     33.93
+     3 TG/CA     -0.63     -1.79      3.15     -0.90      3.75     27.60
+     4 GG/CC     -0.43     -1.50      3.48      0.63      2.40     33.17
+     5 GG/CC      0.44     -1.72      3.22      1.41      4.23     33.11
+     6 GC/GC     -0.54     -0.84      2.99     -0.24      4.83     28.62
+     7 CC/GG      0.33     -1.26      3.19      0.16      2.69     33.28
+     8 CC/GG      0.14     -1.55      3.47     -1.64      2.14     32.24
+     9 CA/TG      0.36     -1.60      3.35     -1.17      5.19     31.10
+    10 AT/AT     -0.37     -2.00      3.34     -0.79     -1.97     32.71
+    11 TG/CA     -1.17     -1.58      2.84     -2.34     10.52     23.29
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        ave.     -0.10     -1.56      3.24     -0.43      3.62     31.10
+        s.d.      0.57      0.34      0.20      1.08      3.32      3.29
+****************************************************************************
+Structure classification: 
+
+This is a right-handed nucleic acid structure
+****************************************************************************
+lambda: virtual angle between C1'-YN1 or C1'-RN9 glycosidic bonds and the
+        base-pair C1'-C1' line
+
+C1'-C1': distance between C1' atoms for each base-pair
+RN9-YN1: distance between RN9-YN1 atoms for each base-pair
+RC8-YC6: distance between RC8-YC6 atoms for each base-pair
+
+    bp     lambda(I) lambda(II)  C1'-C1'   RN9-YN1   RC8-YC6
+   1 C-G      55.2      54.6      10.6       8.9       9.9
+   2 A-T      59.9      62.1      10.1       8.7       9.8
+   3 T-A      58.7      60.9      10.3       8.8       9.9
+   4 G-C      56.9      57.8      10.5       9.0       9.9
+   5 G-C      52.8      54.8      10.7       9.0       9.9
+   6 G-C      54.7      59.2      10.6       9.0       9.9
+   7 C-G      55.5      53.1      10.7       9.0       9.9
+   8 C-G      56.3      55.9      10.6       8.9       9.8
+   9 C-G      57.9      56.8      10.5       8.9       9.9
+  10 A-T      60.8      58.1      10.2       8.7       9.8
+  11 T-A      57.2      58.4      10.4       8.8       9.8
+  12 G-C      54.9      55.6      10.5       8.9       9.8
+****************************************************************************
+Classification of each dinucleotide step in a right-handed nucleic acid
+structure: A-like; B-like; TA-like; intermediate of A and B, or other cases
+
+    step       Xp      Yp      Zp     XpH     YpH     ZpH    Form
+   1 CA/TG   -1.52    8.13    2.48   -4.83    7.51    3.97     A
+   2 AT/AT   -2.16    7.92    2.63   -5.47    7.94    2.57     A
+   3 TG/CA   -2.02    8.56    2.40   -6.51    8.16    3.51     A
+   4 GG/CC   -1.46    8.27    2.55   -4.34    8.07    3.12     A
+   5 GG/CC   -1.32    8.14    2.62   -4.87    7.75    3.61     A
+   6 GC/GC   -1.09    8.58    2.21   -3.45    8.13    3.51     A
+   7 CC/GG   -1.22    8.28    2.42   -3.79    8.06    3.08     A
+   8 CC/GG   -1.47    8.19    2.50   -4.38    8.02    3.01     A
+   9 CA/TG   -1.75    8.16    2.60   -5.64    7.62    3.91     A
+  10 AT/AT   -1.93    7.96    2.69   -5.02    8.10    2.22     A
+  11 TG/CA   -1.61    8.67    2.15   -7.63    6.95    5.61     A
+****************************************************************************
+Minor and major groove widths: direct P-P distances and refined P-P distances
+   which take into account the directions of the sugar-phosphate backbones
+
+   (Subtract 5.8 Angstrom from the values to take account of the vdw radii
+    of the phosphate groups, and for comparison with FreeHelix and Curves.)
+
+Ref: M. A. El Hassan and C. R. Calladine (1998). ``Two Distinct Modes of
+     Protein-induced Bending in DNA.'' J. Mol. Biol., v282, pp331-343.
+
+                  Minor Groove        Major Groove
+                 P-P     Refined     P-P     Refined
+   1 CA/TG       ---       ---       ---       ---
+   2 AT/AT       ---       ---       ---       ---
+   3 TG/CA      15.8       ---      17.0       ---
+   4 GG/CC      16.1      15.1      16.7      15.9
+   5 GG/CC      16.6      15.8      16.0      15.0
+   6 GC/GC      17.1      16.3      15.4      14.5
+   7 CC/GG      16.8      16.0      16.0      15.2
+   8 CC/GG      16.1      15.2      16.3      16.0
+   9 CA/TG      15.9       ---      18.5       ---
+  10 AT/AT       ---       ---       ---       ---
+  11 TG/CA       ---       ---       ---       ---
+****************************************************************************
+Global linear helical axis defined by equivalent C1' and RN9/YN1 atom pairs
+Deviation from regular linear helix: 3.21(0.33)
+Helix:     0.4675    0.4690    0.7493
+HETATM 9998  XS    X X 999       5.942  -1.395   6.323
+HETATM 9999  XE    X X 999      22.514  15.232  32.884
+Average and standard deviation of helix radius:
+      P: 9.17(0.91), O4': 8.46(0.90),  C1': 7.74(0.87)
+
+Global parameters based on C1'-C1' vectors:
+
+disp.: displacement of the middle C1'-C1' point from the helix
+angle: inclination between C1'-C1' vector and helix (subtracted from 90)
+twist: helical twist angle between consecutive C1'-C1' vectors
+rise:  helical rise by projection of the vector connecting consecutive
+       C1'-C1' middle points onto the helical axis
+
+     bp       disp.    angle     twist      rise
+   1 C-G      6.75      5.45     33.28      3.27
+   2 A-T      5.51      4.99     33.99      2.93
+   3 T-A      4.52      3.72     27.66      3.14
+   4 G-C      5.11      1.85     33.22      3.09
+   5 G-C      5.68      0.57     33.24      3.14
+   6 G-C      5.70      3.40     28.75      3.69
+   7 C-G      6.04      4.43     33.51      3.07
+   8 C-G      5.47      4.21     32.40      2.93
+   9 C-G      5.19      4.21     31.34      3.02
+  10 A-T      5.11      4.10     32.76      2.97
+  11 T-A      6.07      4.67     22.95      4.18
+  12 G-C      7.47      6.71      ---       --- 
+****************************************************************************
+Main chain and chi torsion angles: 
+
+Note: alpha:   O3'(i-1)-P-O5'-C5'
+      beta:    P-O5'-C5'-C4'
+      gamma:   O5'-C5'-C4'-C3'
+      delta:   C5'-C4'-C3'-O3'
+      epsilon: C4'-C3'-O3'-P(i+1)
+      zeta:    C3'-O3'-P(i+1)-O5'(i+1)
+
+      chi for pyrimidines(Y): O4'-C1'-N1-C2
+          chi for purines(R): O4'-C1'-N9-C4
+
+Strand I
+  base    alpha    beta   gamma   delta  epsilon   zeta    chi
+   1 C     ---     ---     57.3    80.8  -144.8   -68.0  -169.7
+   2 A    -69.9   164.5    58.0    81.3  -165.1   -62.2  -170.0
+   3 T    -71.0  -178.4    54.1    77.2  -159.8   -66.4  -163.8
+   4 G    -71.3   172.6    59.1    76.8  -161.8   -66.9  -165.8
+   5 G    -70.5   174.6    53.6    78.1  -154.9   -63.5  -167.7
+   6 G    -63.9   175.3    54.6    76.6  -148.8   -77.7  -163.5
+   7 C    -63.5   161.2    53.8    81.7  -163.3   -66.3  -157.6
+   8 C    -61.6   170.0    50.9    81.6  -154.3   -64.1  -160.7
+   9 C    -76.2   177.3    60.2    79.9  -148.5   -70.1  -163.7
+  10 A    -67.9   165.8    58.6    77.5  -165.2   -63.5  -170.0
+  11 T    -73.3  -175.2    58.0    77.8  -160.9   -73.3  -157.8
+  12 G    -65.6  -167.1    56.0   131.5    ---     ---   -121.9
+
+Strand II
+  base    alpha    beta   gamma   delta  epsilon   zeta    chi
+   1 G    -54.4  -177.6    42.2    84.1    ---     ---   -149.7
+   2 T    -62.9  -174.8    44.5    82.4  -167.2   -74.9  -155.0
+   3 A    141.8  -160.4  -178.8    83.6  -150.5   -63.3  -174.0
+   4 C    -67.5   174.2    54.0    79.0  -161.6   -70.8  -159.5
+   5 C    -63.8   173.9    54.4    80.8  -154.5   -59.3  -159.7
+   6 C    -62.3   155.5    59.3    79.6  -165.3   -69.1  -164.1
+   7 G    -69.3   178.9    56.2    79.0  -140.4   -77.3  -159.7
+   8 G    -64.4   172.8    58.0    79.0  -159.1   -69.9  -164.7
+   9 G    -69.6   169.5    56.2    78.8  -155.8   -70.3  -166.5
+  10 T    -76.9   178.9    59.6    75.5  -154.5   -67.3  -165.0
+  11 A    146.9  -158.3   178.9    85.5  -157.3   -57.9  -175.3
+  12 C     ---     ---     52.3    74.8  -160.4   -70.3  -161.6
+****************************************************************************
+Sugar conformational parameters: 
+
+Note: v0: C4'-O4'-C1'-C2'
+      v1: O4'-C1'-C2'-C3'
+      v2: C1'-C2'-C3'-C4'
+      v3: C2'-C3'-C4'-O4'
+      v4: C3'-C4'-O4'-C1'
+
+      tm: the amplitude of pucker
+      P:  the phase angle of pseudorotation
+
+Strand I
+ base       v0      v1      v2      v3      v4      tm       P    Puckering
+   1 C     10.1   -33.4    42.8   -37.5    16.5    42.9     4.6    C3'-endo
+   2 A      6.0   -30.6    41.9   -40.0    20.6    42.6    10.5    C3'-endo
+   3 T      2.2   -28.4    42.6   -42.7    24.9    44.2    15.8    C3'-endo
+   4 G      2.1   -28.6    42.9   -43.7    25.4    44.7    16.2    C3'-endo
+   5 G      6.0   -31.7    44.7   -42.8    22.1    45.6    11.2    C3'-endo
+   6 G     -0.1   -26.4    41.1   -42.0    25.9    43.2    18.2    C3'-endo
+   7 C      4.2   -28.8    41.6   -39.3    22.1    42.6    12.5    C3'-endo
+   8 C      3.3   -28.0    41.6   -41.1    23.2    43.0    14.4    C3'-endo
+   9 C      2.3   -28.0    42.4   -42.6    24.7    44.1    15.8    C3'-endo
+  10 A      0.2   -26.6    41.5   -42.6    25.9    43.6    18.1    C3'-endo
+  11 T     -2.3   -22.7    38.2   -40.6    25.7    41.1    21.3    C3'-endo
+  12 G    -19.4    26.8   -23.5    12.7     4.9    26.6   151.9    C2'-endo
+
+Strand II
+ base       v0      v1      v2      v3      v4      tm       P    Puckering
+   1 G      0.0   -24.1    37.3   -38.2    23.4    39.3    18.1    C3'-endo
+   2 T      1.1   -25.3    39.0   -40.4    23.3    40.9    17.3    C3'-endo
+   3 A      8.4   -29.9    38.8   -35.3    16.2    39.0     6.4    C3'-endo
+   4 C      2.0   -26.3    39.8   -39.4    22.7    41.3    15.5    C3'-endo
+   5 C      5.6   -29.6    41.6   -38.9    20.4    42.3    10.7    C3'-endo
+   6 C      1.4   -27.2    41.5   -40.7    24.3    43.1    15.9    C3'-endo
+   7 G      3.5   -28.2    40.6   -39.3    22.0    41.7    13.4    C3'-endo
+   8 G      5.9   -31.6    44.2   -41.2    22.1    45.0    10.7    C3'-endo
+   9 G      5.5   -31.8    45.1   -42.4    22.6    46.0    11.2    C3'-endo
+  10 T      2.5   -29.7    44.3   -43.5    25.1    45.8    14.9    C3'-endo
+  11 A     11.2   -31.8    39.7   -33.8    14.1    39.7     2.3    C3'-endo
+  12 C      8.2   -34.4    46.7   -42.3    20.9    47.2     8.2    C3'-endo
+****************************************************************************
+Same strand P--P and C1'--C1' virtual bond distances
+
+                 Strand I                          Strand II
+    step      P--P     C1'--C1'       step      P--P     C1'--C1'
+   1 C/A       ---      5.35         1 G/T      5.69      5.53
+   2 A/T      6.33      5.60         2 T/A      6.86      5.87
+   3 T/G      5.76      5.34         3 A/C      5.95      5.10
+   4 G/G      6.08      5.38         4 C/C      5.88      5.27
+   5 G/G      5.85      5.54         5 C/C      6.41      5.38
+   6 G/C      5.71      5.32         6 C/G      5.56      4.99
+   7 C/C      6.20      5.06         7 G/G      6.02      5.50
+   8 C/C      5.99      5.29         8 G/G      6.02      5.40
+   9 C/A      5.86      5.24         9 G/T      5.75      5.37
+  10 A/T      6.25      5.74        10 T/A      7.08      5.51
+  11 T/G      5.75      5.92        11 A/C       ---      5.08
+****************************************************************************
+Helix radius (radial displacement of P, O4', and C1' atoms in local helix
+   frame of each dimer)
+
+                        Strand I                      Strand II
+     step         P        O4'       C1'        P        O4'        C1'
+   1 CA/TG      7.85      7.77      7.19     10.07      9.55      8.76
+   2 AT/AT      9.47      8.68      7.98      9.81      8.75      8.05
+   3 TG/CA     10.82     10.33      9.61     10.11      8.73      8.29
+   4 GG/CC      9.71      9.05      8.24      8.63      7.63      7.01
+   5 GG/CC      8.95      8.38      7.82      9.37      9.15      8.41
+   6 GC/GC      9.66      8.83      7.94      8.02      7.20      6.50
+   7 CC/GG      8.34      7.66      6.95      9.49      8.59      7.82
+   8 CC/GG      8.69      7.95      7.27      9.59      8.79      8.04
+   9 CA/TG      8.70      8.39      7.85     10.28      9.78      9.05
+  10 AT/AT     10.04      8.90      8.17      9.04      8.13      7.49
+  11 TG/CA     11.32     11.56     10.77      9.47      9.40      9.22
+****************************************************************************
+Position (Px, Py, Pz) and local helical axis vector (Hx, Hy, Hz)
+         for each dinucleotide step
+
+     step       Px        Py        Pz        Hx        Hy        Hz
+   1 CA/TG      6.26     -3.01      9.30      0.46      0.39      0.80
+   2 AT/AT      7.58     -0.42     11.24      0.44      0.57      0.69
+   3 TG/CA      7.78      1.82     14.23      0.55      0.47      0.69
+   4 GG/CC      9.93      4.15     15.17      0.48      0.47      0.74
+   5 GG/CC     12.83      4.86     16.96      0.53      0.44      0.72
+   6 GC/GC     12.74      6.63     20.19      0.52      0.49      0.70
+   7 CC/GG     14.73      9.01     21.27      0.52      0.43      0.74
+   8 CC/GG     16.73     10.38     23.65      0.48      0.41      0.78
+   9 CA/TG     18.36     12.57     25.40      0.41      0.49      0.77
+  10 AT/AT     21.14     12.87     27.67      0.61      0.42      0.67
+  11 TG/CA     23.11     17.24     29.25      0.21      0.25      0.94
