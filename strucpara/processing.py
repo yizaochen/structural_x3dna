@@ -85,6 +85,20 @@ class BaseStepAgent(BasePairAgent):
                 result.append(f'bp{bp_id}_bp{bp_id+1}')
         return ['\t'.join(result)]
 
+class BaseHelicalAgent(BasePairAgent):
+    def __init__(self, rootfolder, host, time_interval):
+        super().__init__(rootfolder, host, time_interval)
+        self.parameters = ['x_displacement', 'y_displacement', 'inclination', 'tip', 'h_rise', 'h_twist']
+
+    def get_first_line(self):
+        result = ['Frame-ID']
+        for bp_id in range(1, self.n_bp):
+            if bp_id == (self.n_bp-1):
+                result.append(f'bp{bp_id}_bp{bp_id+1}\n')
+            else:
+                result.append(f'bp{bp_id}_bp{bp_id+1}')
+        return ['\t'.join(result)]
+
 
 class GrooveAgent(BasePairAgent):
     def __init__(self, rootfolder, host, time_interval):

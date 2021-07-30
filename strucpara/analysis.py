@@ -198,6 +198,25 @@ class BaseStepAgent(BasePairAgent):
 
         return temp_array_1_flatten[~zero_indice_1], temp_array_2_flatten[~zero_indice_2]
 
+class BaseHelicalAgent(BasePairAgent):
+
+    def __init__(self, rootfolder):
+        super().__init__(rootfolder)
+
+    def process_data_for_one_time_interval(self, parameter, host, time_interval):
+        host_time_folder = path.join(self.rootfolder, host, time_interval)
+        fname = path.join(host_time_folder, f'{parameter}.csv')
+        df = pd.read_csv(fname, index_col='Frame-ID')
+        n_frame = df.shape[0]
+        temp_array = np.zeros((n_frame, self.n_bp))
+        col_id = 0
+        for bp_id in range(self.start_bp, self.end_bp):
+            temp_array[:,col_id] = df[f'bp{bp_id}_bp{bp_id+1}']
+            col_id += 1
+        temp_array_2 = np.ndarray.flatten(temp_array)
+        zero_indice = np.isclose(temp_array_2, 0)
+        return temp_array_2[~zero_indice]
+
 class GrooveAgent(BasePairAgent):
 
     def __init__(self, rootfolder):

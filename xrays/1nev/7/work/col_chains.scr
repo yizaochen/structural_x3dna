@@ -1,0 +1,47 @@
+zap
+load nmrpdb hel_regions.pdb
+# load /home/yizaochen/codes/structural_x3dna/xrays/1nev/7/1nev_clean.pdb
+# restrict not (protein or water)
+
+select 1:A
+color red
+select 20:B
+color green
+select 2:A
+color red
+select 19:B
+color green
+select 3:A
+color red
+select 18:B
+color green
+select 4:A
+color red
+select 17:B
+color green
+select 5:A
+color red
+select 16:B
+color green
+select 6:A
+color red
+select 15:B
+color green
+select 7:A
+color red
+select 14:B
+color green
+select 8:A
+color red
+select 13:B
+color green
+select 9:A
+color red
+select 12:B
+color green
+select 10:A
+color red
+select 11:B
+color green
+
+select all
