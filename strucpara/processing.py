@@ -114,4 +114,16 @@ class GrooveAgent(BasePairAgent):
                 result.append(f'label{bp_id}')
         return ['\t'.join(result)]
 
-    
+class PhaseChiDeltaAgent(BasePairAgent):
+    def __init__(self, rootfolder, host, time_interval):
+        super().__init__(rootfolder, host, time_interval)
+        self.parameters = ['phase1', 'phase2', 'chi1', 'chi2', 'delta1', 'delta2']
+
+    def get_first_line(self):
+        result = ['Frame-ID']
+        for bp_id in range(1, self.n_bp+1):
+            if bp_id == self.n_bp:
+                result.append(f'Base{bp_id}\n')
+            else:
+                result.append(f'Base{bp_id}')
+        return ['\t'.join(result)]

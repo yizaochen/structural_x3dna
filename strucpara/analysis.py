@@ -2,6 +2,7 @@ from os import path
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from strucpara.plot_util import FourHostSplitStrand
 
 class BasePairAgent:
     hosts = ['a_tract_21mer', 'tat_21mer', 'g_tract_21mer', 'gcgc_21mer']
@@ -321,3 +322,48 @@ class GrooveAgent(BasePairAgent):
                 d_axes[host] = axes[row_id, col_id]
                 host_id += 1
         return d_axes
+
+class PhaseChiDeltaAgent(BasePairAgent):
+    d_phase_strand = {'STRAND1': 'phase1', 'STRAND2': 'phase2'}
+    strands = ['STRAND1', 'STRAND2']
+
+    def histogram_phase_angle_four_systems(self, figsize, outer_wspace, outer_hspace, inner_wspace, inner_hspace, bins, xlims=None, ylims=None, xlines=None, ylines=None):
+        f_agent = FourHostSplitStrand(figsize, outer_wspace, outer_hspace, inner_wspace, inner_hspace)
+        d_axes = f_agent.get_d_axes()
+        for host in self.hosts:
+            for strand_id in self.strands:
+                self.histogram_phase_angle(d_axes[host][strand_id], host, strand_id, bins, xlims, ylims, xlines, ylines)
+        return d_axes
+
+    def histogram_phase_angle(self, ax, host, strandid, bins, xlims, ylims, xlines, ylines):
+        parameter = self.d_phase_strand[strandid]
+        data = self.get_data(host, parameter)
+        ax.hist(data, bins=bins, density=True, color=self.d_colors[host], alpha=0.4, label=strandid)
+        ax.set_ylabel("P")
+        ax.legend(frameon=False)
+        if strandid == 'STRAND1':
+            ax.set_title(self.abbr_hosts[host])
+        else:
+            ax.set_xlabel("Phase Angle")
+        if xlims is not None:
+            ax.set_xlim(xlims)
+        if ylims is not None:
+            ax.set_ylim(ylims)
+        if xlines is not None:
+            for xvalue in xlines:
+                ax.axvline(xvalue, color="grey", alpha=0.1)
+        if ylines is not None:
+            for yvalue in ylines:
+                ax.axhline(yvalue, color="grey", alpha=0.1)
+
+    def process_data_for_one_time_interval(self, parameter, host, time_interval):
+        host_time_folder = path.join(self.rootfolder, host, time_interval)
+        fname = path.join(host_time_folder, f'{parameter}.csv')
+        df = pd.read_csv(fname, index_col='Frame-ID')
+        n_frame = df.shape[0]
+        temp_array = np.zeros((n_frame, self.n_bp))
+        col_id = 0
+        for bp_id in range(self.start_bp, self.end_bp+1):
+            temp_array[:,col_id] = df[f'Base{bp_id}']
+            col_id += 1
+        return np.ndarray.flatten(temp_array)
