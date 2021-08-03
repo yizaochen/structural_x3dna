@@ -355,6 +355,34 @@ class PhaseChiDeltaAgent(BasePairAgent):
         if ylines is not None:
             for yvalue in ylines:
                 ax.axhline(yvalue, color="grey", alpha=0.1)
+                
+    def histogram2d_chi_delta_four_systems(self, figsize, outer_wspace, outer_hspace, inner_wspace, inner_hspace, bins, xlims=None, ylims=None, xlines=None, ylines=None):
+        f_agent = FourHostSplitStrand(figsize, outer_wspace, outer_hspace, inner_wspace, inner_hspace)
+        d_axes = f_agent.get_d_axes()
+        for host in self.hosts:
+            for strand_id in self.strands:
+                self.histogram2d_chi_delta(d_axes[host][strand_id], host, strand_id, bins, xlims, ylims, xlines, ylines)
+        return d_axes
+
+    def histogram2d_chi_delta(self, ax, host, strandid, bins, xlims, ylims, xlines, ylines):
+        chi_array, delta_array = self.get_data_chi_delta(strandid, host)
+        ax.hist2d(chi_array, delta_array, bins=bins, density=True, cmap='Reds')
+        ax.set_ylabel("$\delta$")
+        ax.text(100, 150, strandid)
+        if strandid == 'STRAND1':
+            ax.set_title(self.abbr_hosts[host])
+        else:
+            ax.set_xlabel("$\chi$")
+        if xlims is not None:
+            ax.set_xlim(xlims)
+        if ylims is not None:
+            ax.set_ylim(ylims)
+        if xlines is not None:
+            for xvalue in xlines:
+                ax.axvline(xvalue, color="grey", alpha=0.1)
+        if ylines is not None:
+            for yvalue in ylines:
+                ax.axhline(yvalue, color="grey", alpha=0.1)
 
     def process_data_for_one_time_interval(self, parameter, host, time_interval):
         host_time_folder = path.join(self.rootfolder, host, time_interval)
@@ -367,3 +395,76 @@ class PhaseChiDeltaAgent(BasePairAgent):
             temp_array[:,col_id] = df[f'Base{bp_id}']
             col_id += 1
         return np.ndarray.flatten(temp_array)
+
+    def get_data_central_A_junction_non_junction_part(self, parameter, host):
+        bp_list = list(range(4, 10)) + list(range(13, 19))
+        d_results = dict()
+        for time_interval in self.time_intervals:
+            d_results[time_interval] = self.process_data_for_one_time_interval_custom_bp(parameter, host, time_interval, bp_list)
+        gather_list = [d_results[time_interval] for time_interval in self.time_intervals]
+        return np.concatenate(gather_list)
+
+    def get_data_central_A_junction(self, parameter, host):
+        bp_list = [10, 11, 12]
+        d_results = dict()
+        for time_interval in self.time_intervals:
+            d_results[time_interval] = self.process_data_for_one_time_interval_custom_bp(parameter, host, time_interval, bp_list)
+        gather_list = [d_results[time_interval] for time_interval in self.time_intervals]
+        return np.concatenate(gather_list)
+
+    def process_data_for_one_time_interval_custom_bp(self, parameter, host, time_interval, bp_list):
+        host_time_folder = path.join(self.rootfolder, host, time_interval)
+        fname = path.join(host_time_folder, f'{parameter}.csv')
+        df = pd.read_csv(fname, index_col='Frame-ID')
+        n_frame = df.shape[0]
+        n_bp = len(bp_list)
+        temp_array = np.zeros((n_frame, n_bp))
+        col_id = 0
+        for bp_id in bp_list:
+            temp_array[:,col_id] = df[f'Base{bp_id}']
+            col_id += 1
+        return np.ndarray.flatten(temp_array)
+        
+    def get_data_chi_delta(self, strand_id, host):
+        bp_list = list(range(4,19))
+        d_results_chi = dict()
+        d_results_delta = dict()
+        for time_interval in self.time_intervals:
+            chi_array, delta_array = self.process_data_chi_delta_for_one_time_interval_custom_bp(strand_id, host, time_interval, bp_list)
+            d_results_chi[time_interval] = chi_array
+            d_results_delta[time_interval] = delta_array
+        gather_list_chi = [d_results_chi[time_interval] for time_interval in self.time_intervals]
+        gather_list_delta = [d_results_delta[time_interval] for time_interval in self.time_intervals]
+        return np.concatenate(gather_list_chi), np.concatenate(gather_list_delta)
+        
+    def get_data_chi_delta_by_bplist(self, strand_id, host, bp_list):
+        d_results_chi = dict()
+        d_results_delta = dict()
+        for time_interval in self.time_intervals:
+            chi_array, delta_array = self.process_data_chi_delta_for_one_time_interval_custom_bp(strand_id, host, time_interval, bp_list)
+            d_results_chi[time_interval] = chi_array
+            d_results_delta[time_interval] = delta_array
+        gather_list_chi = [d_results_chi[time_interval] for time_interval in self.time_intervals]
+        gather_list_delta = [d_results_delta[time_interval] for time_interval in self.time_intervals]
+        return np.concatenate(gather_list_chi), np.concatenate(gather_list_delta)
+
+    def process_data_chi_delta_for_one_time_interval_custom_bp(self, strand_id, host, time_interval, bp_list):
+        host_time_folder = path.join(self.rootfolder, host, time_interval)
+        if strand_id == 'STRAND1':
+            parameters = ('chi1', 'delta1')
+        else:
+            parameters = ('chi2', 'delta2')
+        fname1 = path.join(host_time_folder, f'{parameters[0]}.csv')
+        fname2 = path.join(host_time_folder, f'{parameters[1]}.csv')
+        df1 = pd.read_csv(fname1, index_col='Frame-ID')
+        df2 = pd.read_csv(fname2, index_col='Frame-ID')
+        n_frame = df1.shape[0]
+        n_bp = len(bp_list)
+        temp_array1 = np.zeros((n_frame, n_bp))
+        temp_array2 = np.zeros((n_frame, n_bp))
+        col_id = 0
+        for bp_id in bp_list:
+            temp_array1[:,col_id] = df1[f'Base{bp_id}']
+            temp_array2[:,col_id] = df2[f'Base{bp_id}']
+            col_id += 1
+        return np.ndarray.flatten(temp_array1), np.ndarray.flatten(temp_array2)

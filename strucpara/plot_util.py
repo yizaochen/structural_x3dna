@@ -16,7 +16,7 @@ class FourHostSplitStrand:
         self.inner_wspace = inner_wspace
         self.inner_hspace = inner_hspace
 
-        self.fig = plt.figure(figsize=self.figsize)
+        self.fig = plt.figure(figsize=self.figsize, facecolor='white')
         self.outer_grid = GridSpec(2, 2, wspace=self.outer_wspace, hspace=self.outer_hspace, figure=self.fig)
         self.d_inner_grids = self.ini_inner_grids()
         self.d_axes = self.ini_d_axes()
