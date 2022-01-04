@@ -4,11 +4,12 @@ from os import path, system
 class InitialLocalAgent:
     gmx = '/usr/bin/gmx'
     rootfolder = '/home/yizaochen/codes/dna_rna/collect_folder_to_multiscale'
-    type_na = 'bdna+bdna'
 
-    def __init__(self, host, time_interval):
+    def __init__(self, host, time_interval, type_na='bdna+bdna'):
         self.host = host
         self.time_interval = time_interval
+        self.type_na = type_na
+
         self.host_folder = path.join(self.rootfolder, host, time_interval)
         self.ref_pdb = path.join(self.host_folder, f'{self.type_na}.perfect.pdb')
         self.in_xtc = path.join(self.host_folder, f'{self.type_na}.all.fitperfect.xtc')
@@ -29,11 +30,12 @@ class InitialLocalAgent:
 class InitialAgent:
     gmx_server = '/home/tclick/usr/gromacs/bin/gmx'
     rootfolder = '/home/yizaochen/x3dna/paper_2021'
-    type_na = 'bdna+bdna'
 
-    def __init__(self, host, time_interval):
+    def __init__(self, host, time_interval, type_na='bdna+bdna'):
         self.host = host
         self.time_interval = time_interval
+        self.type_na = type_na
+
         self.host_folder = path.join(self.rootfolder, host, time_interval)
         self.ref_pdb = path.join(self.host_folder, f'{self.type_na}.perfect.pdb')
         self.in_xtc = path.join(self.host_folder, f'{self.type_na}.all.fitperfect.xtc')

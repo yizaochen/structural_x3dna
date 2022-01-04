@@ -8,11 +8,12 @@ class X3DNALocalAgent:
     x3dna_root = '/home/yizaochen/opt/x3dna-v2.3/bin'
     ensemble_exec = path.join(x3dna_root, 'x3dna_ensemble')
     rootfolder = '/home/yizaochen/codes/dna_rna/collect_folder_to_multiscale'
-    type_na = 'bdna+bdna'
 
-    def __init__(self, host, time_interval):
+    def __init__(self, host, time_interval, type_na='bdna+bdna'):
         self.host = host
         self.time_interval = time_interval
+        self.type_na = type_na
+
         self.host_folder = path.join(self.rootfolder, host, time_interval)
         self.ref_pdb = path.join(self.host_folder, f'{self.type_na}.perfect.pdb')
         self.out_pdb = path.join(self.host_folder, f'{self.type_na}.all.fitperfect.pdb')

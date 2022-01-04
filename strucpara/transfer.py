@@ -4,16 +4,16 @@ from strucpara.miscell import check_dir_exist_and_make
 
 class TransferAgent:
     gmx_local = '/usr/bin/gmx'
-    type_na = 'bdna+bdna'
     time_series = ['0_1us', '1_2us', '2_3us', '3_4us', '4_5us']
     collect_root = '/home/yizaochen/codes/dna_rna/collect_folder_to_multiscale'
     d_mdnum = {'0_1us': (1, 10), '1_2us': (11, 20), '2_3us': (21, 30), 
                '3_4us': (31, 40), '4_5us': (41, 50)}
 
-    def __init__(self, allsys_folder, host, time_interval):
+    def __init__(self, allsys_folder, host, time_interval, type_na='bdna+bdna'):
         self.allsys_folder = allsys_folder
         self.host = host
         self.time_interval = time_interval # '0_1us', '1_2us', '2_3us', '3_4us', '4_5us'
+        self.type_na = type_na
 
         self.local_folder = path.join(allsys_folder, host, self.type_na, 'input', 'allatoms')
         self.perfect_gro = path.join(self.local_folder, f'{self.type_na}.perfect.gro')
