@@ -1,9 +1,11 @@
 from os import path, system
 from io import StringIO
+from shutil import copyfile
 import pandas as pd
 from strucpara.miscell import check_dir_exist_and_make
 
 ensemble_exec = '/home/yizaochen/opt/x3dna-v2.3/bin/x3dna_ensemble'
+
 
 class BasePairAgent:
 
@@ -34,6 +36,12 @@ class BasePairAgent:
         print('Please excute the following in the terminal:')
         cmd = f'scp yizaochen@{serverip}:{self.ensemble_out_server} {self.ensemble_out}'
         print(cmd)
+
+    def copy_out_to_datafolder(self):
+        collect_root = '/home/yizaochen/codes/dna_rna/collect_folder_to_multiscale'
+        old_file = path.join(collect_root, self.host, self.time_interval, f'{self.type_na}.ensemble.out')
+        copyfile(old_file, self.ensemble_out)
+        print(f'cp {old_file} {self.ensemble_out}')
         
     def extract_parameters(self):
         for parameter in self.parameters:
